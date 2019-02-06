@@ -1,0 +1,164 @@
+/********************************* Responsive *********************************/
+
+@media screen and (min-width:1170px) {
+    .container {
+        width: 1310px;
+    }
+}
+
+@media screen and (min-width:992px) {
+    .cover-container {
+        width: 960px;
+    }
+    #pricing .cover-container {
+        width: 810px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .site-wrapper {
+        height: calc(100vh - 87px);
+    }
+    #logged, #signup, #pricing {
+        min-height: initial;
+        height: initial;
+    }
+    #logged .page-footer, #signup .page-footer, #pricing .page-footer {
+        position: relative;
+        float: left;
+    }
+    #logged .alert-box {
+        position: relative;
+        top: initial;
+        right: inherit;
+        margin-bottom: 20px;
+    }
+    .title {
+        margin-top: 20px;
+    }
+    .landingText {
+        margin-top: 12px;
+            width: 90%;
+    }
+    .landingText::before {
+        content: '';
+        width: 94%;
+        height: 94%;
+        position: absolute;
+        left: 3%;
+        right: 3%;
+        top: 3%;
+        bottom: 4%;
+        border: 4px solid rgba(225, 154, 36, 0.99);
+    }
+    .landingText h4 {
+        font-size: 52px;
+    }
+    .landingText h5 {
+        font-size: 32px;
+    }
+    #modal_info.modal .modal-content {
+        padding: 4%;
+    }
+    .infoBox {
+        border: 2px solid #FF9800;
+        padding: 0 20px 30px 20px;
+    }
+    .infoBox .modal-header .modal-close {
+        float: right !important;
+        padding: 0;
+        font-size: 0;
+        margin-top: 5px;
+    }
+    .page-footer ul.list-inline {
+        line-height: 24px;
+    }
+    .page-footer ul.list-inline li:last-child img {
+        width: 100px;
+    }
+    .card .card-image {
+        display: none;
+    }
+    .card-footer {
+        position: relative;
+        bottom: auto;
+        width: inherit;
+    }
+    .right-align {
+        text-align: initial;
+        margin-top: 20px;
+    }
+    .right {
+        float: left !important;
+        margin-top: 12px;
+    }
+    .nav-full {
+        display: none;
+    }
+    /*timelne*/
+    .share-btn .material-icons {
+        display: block;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+    .leftBox, .rightBox {
+        display: none;
+    }
+    .last-seen {
+        width: 100%;
+    }
+    .activity {
+        min-height: 350px;
+        margin-bottom: 12px;
+    }
+    .memoryBox {
+        margin-bottom: 12px;
+    }
+    .CurrentPlan {
+        margin-bottom: 20px;
+    }
+    .price-box {
+        margin-bottom: 12px;
+    }
+    .card-stacked {
+        padding: 0;
+    }
+    .change-password.card .card-content {
+        padding: 50px;
+    }
+    .contact {
+        min-height: 300px;
+    }
+    .shareEdit_content {
+        padding: 20px 0 0 0;
+    }
+    #detail .shareBtn_group {
+        flex-wrap: wrap;
+    }
+    #detail .shareBtn_group .share-btn {
+        flex: initial;
+        width: 50%;
+    }
+    .memorialBox_wrap, .albumBox_wrap {
+        display: block;
+    }
+    .memorial-img-box, .album-img-box {
+        width: auto;
+    }
+    .memorialSingle {
+        display: block;
+    }
+    .memorialProfileDtl {
+        margin: 0;
+    }
+    .memorialProfileDtl .control .btn {
+        padding: 0 20px;
+    }
+    .switch label {
+        display: block;
+    }
+    .g-recaptcha {
+        width: 290px !important;
+        overflow: hidden;
+    }
+}

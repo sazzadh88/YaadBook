@@ -1,0 +1,612 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Raleway:400,600,700|Source+Sans+Pro');
+/*font-family: 'Source Sans Pro', sans-serif;
+font-family: 'Raleway', sans-serif;*/
+
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', sans-serif;
+}
+
+#landingPage header {
+    background: #f1931a url(../images/landingBg.jpg) no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+}
+.bg-transparent {
+    padding: 40px 0 80px 0px;
+    /* border-bottom: 3px solid #ffa31b; */
+}
+.brand-logo {
+    position: relative;
+}
+.introTxt h1 {
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 36px;
+    border-bottom: 4px double #fff;
+    padding: 0 0 9px;
+}
+#candle {
+    position: absolute;
+    width: 40px;
+    top: 6px;
+    margin-left: -6px;
+}
+.introSec {
+    margin-top: 35px;
+}
+.introTxt {
+    color: #fff;
+}
+.introTxt ul {
+    padding: 0;
+    margin: 40px 0 0 0;
+    list-style: none;
+}
+.introTxt ul li {
+    line-height: 18px;
+    margin: 20px 0;
+    padding-left: 60px;
+}
+.io {
+    width: 31px;
+    height: 32px;
+    text-align: center;
+    position: absolute;
+    left: 14px;
+}
+.io-1 {
+    background: url(../images/icon1.png);
+    -moz-background: url(../images/icon1.png);
+    -o-background: url(../images/icon1.png);
+    -webkit-background: url(../images/icon1.png);
+}
+/*.io-1 {
+    content: url(../images/icon1.png);
+    -moz-content: url(../images/icon1.png);
+    -o-content: url(../images/icon1.png);
+    -webkit-content: url(../images/icon1.png);
+}*/
+.io-2 {
+    background: url(../images/icon2.png);
+    -o-background: url(../images/icon2.png);
+    -moz-background: url(../images/icon2.png);
+    -webkit-background: url(../images/icon2.png);
+}
+.io-3 {
+    background: url(../images/icon3.png);
+    -o-background: url(../images/icon3.png);
+    -moz-background: url(../images/icon3.png);
+    -webkit-background: url(../images/icon3.png);
+}
+.signupForm {
+    background: #fff;
+    border-radius: 20px;
+    padding: 10px 31px;
+    position: absolute;
+    margin-left: 80px;
+    box-shadow: 0px 7px 46px 4px rgba(0,0,0,0.05);
+    top: -35px;
+    width: 75%;
+}
+.signupForm h3{
+    font-size: 20px;
+    color: #000;
+    font-weight: 600;
+}
+.signupForm .btn {
+    border-radius: 100px;
+    background-color: #ff7a20;
+    /* padding: 4px; */
+    border-color: transparent;
+        margin: 20px 0 0;
+    color: #fff !important;
+}
+
+.input-field {
+    margin: 0 0 20px;
+}
+
+.signupForm label {
+    font-size:0;
+}
+
+#landingPage main {
+    min-height: 70vh;
+}
+.secTitle  {
+    text-align: center;
+    font-weight: 700;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+.btn-custom {
+    padding: 14px 40px;
+    border: 0;
+    border-radius: 100px;
+    background: #f09819; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #f09819 0%, #ff4f32 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #f09819 0%,#ff4f32 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #f09819 0%,#ff4f32 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09819', endColorstr='#ff4f32',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    color: #fff;
+    transition: all linear 0.2s;
+}
+.btn-custom:hover, .btn-custom:focus {
+    background: #ff4f32; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #ff4f32 0%, #f09819 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #ff4f32 0%,#f09819 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #ff4f32 0%,#f09819 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4f32', endColorstr='#f09819',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    color: #fff;
+}
+.btn-custom.btn-sm {
+    padding: 8px 30px;
+}
+
+
+/********* Payment Section *********/
+#stepSec {
+    background-color: #f8f5f5;
+    padding: 40px 0;
+}
+.stepBox {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.step-col {
+    min-width: 42%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 34px 24px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0px 7px 46px 4px rgba(0,0,0,0.05);
+}
+.step-col h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+.step-col h5 {
+    font-size: 16px;
+    color: #787878;
+}
+.welcomeBox h3{
+    font-size: 30px;
+    line-height: 36px;
+    margin: 0 0 15px;
+}
+.welcomeBox h3 + p {
+    margin-bottom: 20px;
+    line-height: 28px;
+}
+
+
+/********* Payment Section *********/
+#orangeSec {
+    background: #f1931a url(../images/bg-4.jpg) no-repeat center center;
+    padding: 30px 0;
+    text-align: center;
+}
+#orangeSec h1 {
+    color: #fff;
+    font-size: 37px;
+    line-height: 49px;
+    margin: 0 18%;
+    font-weight: 600;
+}
+
+
+/********* Payment Section *********/
+#aboutSec {
+    padding: 45px 0;
+}
+#aboutSec .btn-custom {
+    margin-top: 30px;
+}
+#aboutSec h5 {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    position: relative;
+}
+#aboutSec h5::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    height: 1px;
+    background: #f09819;
+}
+#aboutSec h1 {
+    width: 80%;
+    line-height: 34px;
+    font-size: 21px;
+}
+
+
+/********* Payment Section *********/
+#paymentSec {
+    background: rgba(0, 0, 0, 0.04) url(../images/bg-5.jpg) no-repeat center center;
+    padding: 45px 0;
+}
+.paymentBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.payment-col {
+    margin: 0 20px;
+}
+.paymentBox .btn-custom {
+    margin-top: 14px;
+}
+
+
+
+/********* Home Blog *********/
+#blogSec {
+    background: url(../images/bg-6.jpg) no-repeat center center;
+    background-size: cover;
+    padding: 45px 0;
+}
+.blogBox {
+    position: relative;
+    top: 0;
+    margin-left: 40px;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0px 4px 46px 0px rgba(0,0,0,0.1);
+    transition: all linear 0.2s;
+}
+.blogBox:hover, .blogBox:focus {
+    box-shadow: 0px 14px 66px 0px rgba(0,0,0,0.15);
+    top: -10px;
+}
+.blogBox figure {
+    display: block;
+    min-height: 226px;
+    max-height: 226px;
+    overflow: hidden;
+}
+.blogBox figure img {
+    width: 100%;
+    transform: scale(1);
+    transition: all linear 0.2s;
+}
+.blogBox:hover figure img, 
+.blogBox:focus figure img {
+    transform: scale(1.1);
+}
+.blogInfo {
+    padding: 25px 60px 60px;
+}
+.blogMeta {
+    display: flex;
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+}
+.blogMeta .meta {
+    margin-right: 40px;
+}
+.blogTitle {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 32px;
+    margin-bottom: 20px;
+}
+.blogText {
+    font-size: 14px;
+    line-height: 22px;
+}
+.blogInfo .btn-custom {
+    margin-top: 30px;
+}
+
+.memorial {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+}
+/********* Funeral Signup *********/
+#funeralSec {
+    background: url(../images/bg-7.jpg) no-repeat center center;
+    padding: 45px 0;
+}
+#funeralSec h3 {
+    color: #fff;
+    font-size: 40px;
+    line-height: 42px;
+    font-weight: 600;
+}
+#funeralSec .btn-custom {
+    margin: 24px 0;
+} 
+
+
+/********* Testimonials *********/
+#testimonialSec {
+    padding: 45px 0;
+    position: relative;
+}
+#testimonialSec .secTitle + svg {
+    width: 8em;
+    height: 8em;
+    position: absolute;
+    left: 20%;
+    top: 30%;
+    z-index: -1;
+    fill-opacity: 0.05;
+}
+#testimonialSec .carousel-item {
+    min-height: 100%;
+}
+#testimonialSec .carousel-caption {    
+    margin: 0px auto;
+    max-width: 70%;
+    color: #333;
+    position: relative;
+    left: auto;
+    right: auto;
+}
+
+/********* Footer **********/
+.footer_bg{
+    margin:0;
+    padding:15px 0px;
+    background: #151414;
+    width: 100%;
+    float: left;
+}
+.footer_bg h2{
+   margin: 0px 0 15px 14px;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;	
+    color: #fff;
+}
+.footer_line {
+    margin: 15px 0px 15px 0px;
+    padding: 0;
+    width: 140px;
+    border-bottom: 4px double #ff8f00;
+}
+.footer_bg p{
+    margin: 0px 0 10px 0px;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight:300;
+    line-height: 24px;
+    color: #fff;
+}
+.footer_menu {
+    margin: 0;
+    padding:0;
+}
+.social {
+    float:left; 
+}
+.social ul {
+    margin: 0px;
+    padding:0px;
+}
+.social ul li {
+        display: inline-block;
+    margin: 0 3px 0 0;
+}
+.social ul li a {
+    display: block;
+    color: #fff;
+    padding: 8px 12px;
+    background: #ff8f00;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.social ul li a:hover {
+    background: #fff;
+    color: #ff8f00;
+}
+.footer_menu2 {
+     margin: 0;
+    padding:0;
+}
+.footer_menu2 ul {
+     margin:0;
+    padding:0;
+}
+.footer_menu2 ul li { 
+    display:block; ;
+}
+.footer_menu ul {
+      margin: 0;
+    padding: 0;
+}
+.footer_menu ul li{
+        margin: 0;
+    padding: 0;
+    float: left;
+    width: 38%;
+}
+.footer_menu2 ul li a {
+     margin: 0px 0 0 5px;
+    padding: 0 13px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 30px;
+    text-decoration: none;
+    background: url(../img/arrow.png) left 5px no-repeat;
+}
+.footer_menu ul li a {
+     margin: 0px 0 0 5px;
+    padding: 0 13px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 30px;
+    text-decoration: none;
+    background: url(../img/arrow.png) left 5px no-repeat;
+}
+.footer_menu ul li a:hover{
+    color: #fe6500;
+}
+.footer_copyright {
+    margin: 0;
+    padding: 12px 0px;
+    background: #000000;
+    border-top: 1px solid #504f4f;
+    width: 100%;
+    float: left;
+}
+
+.footer_copyright p{
+    margin:0;
+    padding:0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    color: #fff;
+}
+
+.footer_copyright a{
+    margin:0;
+    padding:0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    color:#ff8f00;
+    text-decoration: underline;
+    text-align: right;
+    float: right;
+}
+
+.footer_copyright a:hover{
+    color:#fe6500;
+    text-decoration:underline;
+}
+
+/*media query*/
+@media screen and (max-width:480px) {
+    .signupForm {
+        position: relative;
+        margin: 40px 0;
+            width: 100%;
+    }
+    .welcomeBox td {
+    width: 100%;
+    padding: 0;
+    float: left;
+}
+    .paymentBox h2{
+    font-size: 2.56rem;
+    line-height: 110%;
+    margin: 1.78rem 0 2.424rem 30px;
+}
+    #stepSec#stepSec {
+    padding: 35px 0;
+}
+    .step-col{
+    min-width: 300px;
+}
+    #orangeSec h1  {
+    font-size: 22px !important;
+    line-height: 30px;
+}
+    #blogSec {
+    padding: 13px 0;
+}
+    .secTitle {
+    font-size: 22px;
+}
+    .d-md-block h5 {
+    font-size: 20px;
+}
+    .useful {
+    width: 100% !important;
+    float: none;
+}
+    .acount {
+    float: none;
+    margin: 25px 0 0 0 !important;
+    width: 100% !important;
+}
+    .address {
+    float: none;
+    margin: 25px 0 0 0 !important;
+    width: 100% !important;
+}
+    .social {
+    float: none;
+    width: 100% !important;
+    margin: 25px 0 0 0 !important;
+}
+    .ftr-pnl {
+    width: 100% !important;
+    float: none;
+}
+    .prd {
+    float: none !important;
+}
+    .ftr-pnl p {
+    text-align: center;
+}
+    .blogBox {
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+    .blogBox figure {
+        display: block;
+        min-height: 200px;
+        max-height: 200px;
+        overflow: hidden;
+        margin: 0;
+    }
+    .blogMeta {
+        flex-direction: column;
+    }
+    .paymentBox {
+        flex-direction: column;
+    }
+    #testimonialSec {
+        padding: 20px 0;
+    }
+    .welcomeBox h3 {
+    font-size: 20px;
+    line-height: 28px;
+}
+    .memorial {
+    text-align: left;
+}
+    .our_memorial ul li {
+    list-style: disc inside;
+}
+    .blogInfo {
+    padding: 25px 20px 60px;
+    text-align: justify;
+}
+    #funeralSec h3 {
+    font-size: 27px;
+    line-height: 35px;
+    margin: 0;
+}
+    #funeralSec {
+    padding: 20px 0;
+}
+    #funeralSec .btn-custom {
+    margin: 14px 0;
+    font-size: 15px;
+    float: left;
+}
+    .carousel {
+        height: 455px;
+    }
+}
