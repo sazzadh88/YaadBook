@@ -115,7 +115,7 @@
     </script>
 </head>
 <body id="landingPage">
-<form method="post" action="./" id="form1">
+<form method="post" action="{{ route('userRegister') }}" id="form1">
 
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-transparent">
@@ -158,9 +158,23 @@
                     <div class="signupForm">
                         <h3 class="mb-4">Create an account</h3>
                         <div class="form-row">
+
+                                @if ($errors->any())
+                                <div class="label red">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+
+                                
                             <div class="form-group col-md-6 account">
+                                    
+
                                 <label for="firstName">First Name</label>
-                                <input name="txtFName" type="text" id="txtFName" class="form-control" placeholder="First Name" />
+                                <input name="first_name" type="text" id="txtFName" class="form-control" placeholder="First Name" />
                                   <span id="spnFnamem" class="validate_span">
                                       <span id="spnFname"></span>
                                       <span class="arr"></span>
@@ -168,16 +182,17 @@
                             </div>
                             <div class="form-group col-md-6 account">
                                 <label for="lastName">Last Name</label>
-                               <input name="txtLName" type="text" id="txtLName" class="form-control" placeholder="Last Name" />
+                               <input name="last_name" type="text" id="txtLName" class="form-control" placeholder="Last Name" />
                                  <span id="spnLnamem" class="validate_span">
                                     <span id="spnLname"></span>
                                     <span class="arr"></span>
                                 </span>
                             </div>
+                            @csrf
                         </div>
                         <div class="form-group account">
                             <label for="inputEmail4">Email</label>
-                            <input name="txtEmail" type="text" id="txtEmail" class="form-control" placeholder="Email" />
+                            <input name="email" type="text" id="txtEmail" class="form-control" placeholder="Email" />
                             <span id="spnUnamem" class="validate_span">
                                 <span id="spnUname"></span>
                                 <span class="arr"></span>
@@ -185,7 +200,7 @@
                         </div>
                         <div class="form-group account">
                             <label for="inputPassword4">Password</label>
-                              <input name="txtPwd" type="password" id="txtPwd" class="form-control" placeholder="Password" />
+                              <input name="password" type="password" id="txtPwd" class="form-control" placeholder="Password" />
                              <span id="spnPwdm" class="validate_span">
                                  <span id="spnPwd"></span>
                                  <span class="arr"></span>
@@ -206,22 +221,28 @@
                                                     <ul class="list-inline">
                                                         <li>or login with</li>
                                                         <li>
+                                                                <a href="{{ url('auth/redirect/facebook') }}">
                                                             <span class="btn-floating btn-sm waves-effect waves-light blue darken-4">
-                                                                <input type="submit" name="btnFacebook" value="f" id="btnFacebook" class="btnHide" />
+                                                            
                                                                 <i class="fa fa-facebook"></i>
                                                             </span>
+                                                        </a>
                                                         </li>
-                                                        <li>
+                                                        <li><a href="{{ url('auth/redirect/twitter') }}">
+
                                                             <span class="btn-floating btn-sm waves-effect waves-light blue">
                                                                 <input type="submit" name="btnTwitter" value="" id="btnTwitter" class="btnHide" />
                                                                 <i class="fa fa-twitter"></i>
                                                             </span>
+                                                            </a>
                                                         </li>
                                                         <li>
+                                                        <a href="{{ url('auth/redirect/google') }}">
                                                             <span class="btn-floating btn-sm waves-effect waves-light red darken-3">
                                                                 <input type="submit" name="btnGoogle" value="" id="btnGoogle" class="btnHide" />
                                                                 <i class="fa fa-google-plus"></i>
                                                             </span>
+                                                            </a>
                                                         </li>
                                                         <li>
                                                              <small>Join as a <a href="#">Service Provider</a></small>
@@ -618,35 +639,7 @@ London, EC1N 8JY</p>
                 var utcdiff = dt.getTimezoneOffset();//get the difference from utc time
                 var tt = utcdiff.toString().replace('-', '');
 
-                $.ajax({
-                    type: "POST",
-                    url: "signup.aspx/GetSignup",
-                    data: JSON.stringify({ unamep: uname, password: pwd, mainutype: utype, firstname: fname, lastname: lname, utctime: tt }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.d == '1') {
-                            $('#form1')[0].reset();
-                            $("#msgshow").attr('style', 'display:block');
-                            $('#msgshow').removeClass("alert-box error").addClass("alert-box success");
-                            $("#lblmsg").text("You are successfully registered with us.");
-                            window.setTimeout(function () {
-                                window.location = 'ThankYou.aspx';
-                                //window.location = 'UserTimeline/timeline.aspx';
-                            }, 2000);
-                            
-                          }
-                        else if (response.d == '5') {
-                            $("#msgshow").attr('style', 'display:block');
-                            $('#msgshow').removeClass("alert-box success").addClass("alert-box error");
-                            $("#lblmsg").text("The email you provided has already been registered.");
-                            $("#txtEmail").focus();
-                        }
-                    },
-                    failure: function (response) {
-                        alert(response.d);
-                    }
-                });
+                $('#form1').submit();
             });
             $(document).ready(function () {
                 $('.slider').slider({

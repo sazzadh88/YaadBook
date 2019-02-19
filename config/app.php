@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'YaadBook'),
 
     /*
     |--------------------------------------------------------------------------
@@ -151,6 +151,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -210,7 +211,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
+        'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class
     ],
 
 ];

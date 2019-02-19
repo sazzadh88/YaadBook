@@ -142,14 +142,7 @@ return true;
 </script>
 
 <style>
-.label{
-    border-radius: 4px;
-    padding-left: 10px;
-    font-size: small;
-}
-.label > ul > li {
-    color: #FFF;
-}
+
 </style>
 
 
@@ -278,13 +271,13 @@ return true;
                                                         </li>
                                                         <li>
                                                             <span class="btn-floating btn-sm waves-effect waves-light blue">
-                                                                <input type="submit" name="btnTwitter" value="" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnTwitter&quot;, &quot;&q_rdrFbuot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnTwitter" class="btnHide" />
+                                                            <a  class="btnHide" href="{{ url('auth/redirect/twitter') }}"></a>
                                                                 <i class="fa fa-twitter"></i>
                                                             </span>
                                                         </li>
                                                         <li>
                                                             <span class="btn-floating btn-sm waves-effect waves-light red darken-3">
-                                                                <input type="submit" name="btnGoogle" value="" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnGoogle&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnGoogle" class="btnHide" />
+                                                            <a  class="btnHide" href="{{ url('auth/redirect/google') }}"></a>
                                                                <i class="fa fa-google-plus"></i>
                                                             </span>
                                                         </li>
@@ -310,15 +303,15 @@ return true;
                         <div class="footer_line"></div>
                         <div class="footer_menu">
                         <ul>
-                                <li><a href="about-us.aspx">About</a></li>
-                                <li><a href="manage-plan.aspx">Payment Plan</a></li>
-                                <li><a href="faq.aspx"> FAQ</a></li>
+                            <li><a href="{{ route('about') }} ">About</a></li>
+                                <li><a href="{{ route('payment-plan') }}">Payment Plan</a></li>
+                                <li><a href="{{ route('faqs') }}"> FAQ</a></li>
                                 <li><a href="blog.aspx">Blog</a></li>
                             </ul>
                             <ul>
-                                <li><a href="privacy.aspx">Privacy</a></li>
-                                <li><a href="terms.aspx">Terms</a></li>
-                                <li><a href="contact-us.aspx">Contact</a></li>
+                                <li><a href="{{ route('privacy') }}">Privacy</a></li>
+                                <li><a href="{{ route('terms') }}">Terms</a></li>
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -430,6 +423,7 @@ London, EC1N 8JY</p>
                 });
             };
         </script>
+        
     
 <script type="text/javascript">
 //<![CDATA[

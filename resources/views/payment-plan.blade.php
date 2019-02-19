@@ -103,20 +103,20 @@
     <div class="footer_bg">
             <div class="container">
                 <div class="row">
-                    <div class="useful">
+                <div class="useful">
                         <h2>Usefull Link</h2>
                         <div class="footer_line"></div>
                         <div class="footer_menu">
                         <ul>
-                                <li><a href="about-us.aspx">About</a></li>
-                                <li><a href="manage-plan.aspx">Payment Plan</a></li>
-                                <li><a href="faq.aspx"> FAQ</a></li>
+                            <li><a href="{{ route('about') }} ">About</a></li>
+                                <li><a href="{{ route('payment-plan') }}">Payment Plan</a></li>
+                                <li><a href="{{ route('faqs') }}"> FAQ</a></li>
                                 <li><a href="blog.aspx">Blog</a></li>
                             </ul>
                             <ul>
-                                <li><a href="privacy.aspx">Privacy</a></li>
-                                <li><a href="terms.aspx">Terms</a></li>
-                                <li><a href="contact-us.aspx">Contact</a></li>
+                                <li><a href="{{ route('privacy') }}">Privacy</a></li>
+                                <li><a href="{{ route('terms') }}">Terms</a></li>
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
                             </ul>
                         </div>
                     </div>

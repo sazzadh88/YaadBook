@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Hash;
+use Auth;
 
 class UserController extends Controller
 {
@@ -13,7 +14,8 @@ class UserController extends Controller
         
         $request->validate([
             'email' => 'required|unique:users',
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'password' => 'required'
         ]);
         
@@ -25,7 +27,9 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-        return $user;
+        Auth::loginUsingId($user->id, true);
+
+        return redirect('thank-you');
     }
 
 }

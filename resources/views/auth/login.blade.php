@@ -83,24 +83,36 @@
                                         </div>
                                         <div class="card-form">
                                             <div class="row">
+                                                @if ($errors->any())
+                                                <div class="label red">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                                @endif
+                                            <form action="{{ route('login') }}" method="POST" id="loginForm">
                                                 <div class="input-field col s12">
                                                     <i class="material-icons prefix">perm_identity</i>
-                                                    <input id="txtUname" type="text" class="validate" maxlength="60" autocomplete="off" />
+                                                    <input id="txtUname" name="email" type="text" class="validate" maxlength="60" autocomplete="off" />
                                                     <label for="username">Username/Email id</label>
                                                     <span id="spnUnamem" class="validate_span">
                                                         <span id="spnUname"></span>
                                                         <span class="arr"></span>
                                                     </span>
                                                 </div>
+                                                @csrf
                                                 <div class="input-field col s12">
                                                     <i class="material-icons prefix">lock_open</i>
-                                                    <input id="txtPwd" type="password" onkeydown="if(event.keyCode == 13)document.getElementById('btnLogin').click()" class="validate" maxlength="16" autocomplete="off" />
+                                                    <input id="txtPwd" name="password" type="password" onkeydown="if(event.keyCode == 13)document.getElementById('btnLogin').click()" class="validate" maxlength="16" autocomplete="off" />
                                                     <label for="password">Password</label>
                                                     <span id="spnPwdm" class="validate_span">
                                                         <span id="spnPwd"></span>
                                                         <span class="arr"></span>
                                                     </span>
                                                 </div>
+                                            </form>
                                             </div>
                                         </div>
                                         <div id="msgshow" class="alert-box error" style="display:none;">
@@ -116,22 +128,28 @@
                                                     <ul class="list-inline">
                                                         <li>or login with</li>
                                                         <li>
+                                                        <a href="{{  url('auth/redirect/facebook') }}">
                                                             <span class="btn-floating btn-sm waves-effect waves-light blue darken-4">
-                                                                <input type="submit" name="btnFacebook" value="f" id="btnFacebook" class="btnHide" />
+                                                                
                                                                 <i class="fa fa-facebook"></i>
                                                             </span>
+                                                            </a>
                                                         </li>
                                                         <li>
+                                                        <a href="{{  url('auth/redirect/twitter') }}">
                                                             <span class="btn-floating btn-sm waves-effect waves-light blue">
                                                                 <input type="submit" name="btnTwitter" value="" id="btnTwitter" class="btnHide" />
                                                                 <i class="fa fa-twitter"></i>
                                                             </span>
+                                                            </a>
                                                         </li>
                                                         <li>
+                                                         <a href="{{  url('auth/redirect/google') }}">
                                                             <span class="btn-floating btn-sm waves-effect waves-light red darken-3">
                                                                 <input type="submit" name="btnGoogle" value="" id="btnGoogle" class="btnHide" />
                                                                 <i class="fa fa-google-plus"></i>
                                                             </span>
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                   
@@ -154,15 +172,15 @@
                         <div class="footer_line"></div>
                         <div class="footer_menu">
                         <ul>
-                                <li><a href="about-us.aspx">About</a></li>
-                                <li><a href="manage-plan.aspx">Payment Plan</a></li>
-                                <li><a href="faq.aspx"> FAQ</a></li>
+                            <li><a href="{{ route('about') }} ">About</a></li>
+                                <li><a href="{{ route('payment-plan') }}">Payment Plan</a></li>
+                                <li><a href="{{ route('faqs') }}"> FAQ</a></li>
                                 <li><a href="blog.aspx">Blog</a></li>
                             </ul>
                             <ul>
-                                <li><a href="privacy.aspx">Privacy</a></li>
-                                <li><a href="terms.aspx">Terms</a></li>
-                                <li><a href="contact-us.aspx">Contact</a></li>
+                                <li><a href="{{ route('privacy') }}">Privacy</a></li>
+                                <li><a href="{{ route('terms') }}">Terms</a></li>
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -234,26 +252,28 @@ London, EC1N 8JY</p>
 
                 var uname = document.getElementById("txtUname").value;
                 var pwd = document.getElementById("txtPwd").value;
-                $.ajax({
-                    type: "POST",
-                    url: "login.aspx/GetLogin",
-                    data: JSON.stringify({ unamep: uname, password: pwd, Regtyp: 1, utctime: tt }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.d == 'Invalid') {
-                            $("#msgshow").attr('style', 'display:block');
-                            $("#lblmsg").text("Invalid username or password.");
-                            //$("#lblmsg").css('color', 'red');                       
-                        }
-                        else {
-                            window.location = 'UserTimeline/timeline.aspx';
-                        }
-                    },
-                    failure: function (response) {
-                        alert(response.d);
-                    }
-                });
+
+                $('#loginForm').submit();
+                // $.ajax({
+                //     type: "POST",
+                //     url: "login.aspx/GetLogin",
+                //     data: JSON.stringify({ unamep: uname, password: pwd, Regtyp: 1, utctime: tt }),
+                //     contentType: "application/json; charset=utf-8",
+                //     dataType: "json",
+                //     success: function (response) {
+                //         if (response.d == 'Invalid') {
+                //             $("#msgshow").attr('style', 'display:block');
+                //             $("#lblmsg").text("Invalid username or password.");
+                //             //$("#lblmsg").css('color', 'red');                       
+                //         }
+                //         else {
+                //             window.location = 'UserTimeline/timeline.aspx';
+                //         }
+                //     },
+                //     failure: function (response) {
+                //         alert(response.d);
+                //     }
+                // });
             });
             $(document).ready(function () {
                 $('.slider').slider({

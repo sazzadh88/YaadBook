@@ -162,3 +162,15 @@
         overflow: hidden;
     }
 }
+
+
+
+
+.label{
+    border-radius: 4px;
+    padding-left: 10px;
+    font-size: small;
+}
+.label > ul > li {
+    color: #FFF;
+}

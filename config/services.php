@@ -27,9 +27,15 @@ return [
     ],
 
     'twitter' => [
-        'client_id' => 'bt9ltiqq9wmRSfj0Lof3CVJas ',
-        'client_secret' => 'WVEY2JXwQP468mMkxPwk5PO4Cf9riKUTKhT201gSohUypruNKQ',
+        'client_id' => 'axuAXb5E5IuN3IDNFLUV5er3q',
+        'client_secret' => 'KBKhdikegiDLqA7anAkSm3FYI74biTtewK91i0sle0kVeaBKWD',
         'redirect' => 'http://localhost:8000/auth/callback/twitter',
+    ],
+
+    'google' => [
+        'client_id'     => '4508828512-7sqkkndk8js0n5qmr68g0qlgshq6cou9.apps.googleusercontent.com',
+        'client_secret' => '9DePsd-6c3T7BTlAtyjIG9Io',
+        'redirect'      => 'http://localhost:8000/auth/callback/google'
     ],
 
     'ses' => [

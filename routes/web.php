@@ -9,6 +9,9 @@ Route::view('/cookies', 'cookies')->name('cookies');
 Route::view('/terms', 'terms')->name('terms');
 Route::view('/contact', 'contact')->name('contact');
 Route::view('/payment-plan', 'payment-plan')->name('payment-plan');
+
+Route::view('thank-you', 'thank-you')->name('thank-you');
+
 Auth::routes();
 Route::post('register','UserController@userRegister')->name('userRegister');
 
@@ -25,9 +28,18 @@ Route::post('/login/writer', 'Auth\LoginController@writerLogin');
 Route::post('/register/admin', 'Auth\RegisterController@createAdmin');
 Route::post('/register/writer', 'Auth\RegisterController@createWriter');
 
-Route::view('/home', 'home')->middleware('auth');
+Route::view('/home', 'home')->middleware('auth')->name('home2');
 Route::view('/admin', 'admin')->middleware('auth:admin');;
 Route::view('/writer', 'writer')->middleware('auth:writer');
 
 Route::get('auth/callback/{provider}', 'SocialAuthController@callback');
 Route::get('auth/redirect/{provider}', 'SocialAuthController@redirect');
+
+
+Route::get('ra', function(){
+    return App\Plan::with('plandetail')->get();
+});
+
+Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe','uses' => 'MoneySetupController@payWithStripe'));
+ 
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'MoneySetupController@postPaymentWithStripe'));            

@@ -98,11 +98,11 @@ function __doPostBack(eventTarget, eventArgument) {
             @auth
             
             <ul class="left hide-on-med-and-down csMainHdr">
-                <li><a href="../UserTimeline/timeline.aspx">Home</a></li>
+            <li><a href="{{ route('home2') }}">Home</a></li>
                 <li><a href="../UsualPages/default.aspx">My Profile</a></li>
                 <li><a href="../UserMemorial/memorial.aspx">My Memorials</a></li>
                 <li><a href="../UserAlbum/album.aspx">My Albums</a></li>
-                <li><a href="../{{ route('payment-plan') }}">Manage My Plan</a></li>
+                <li><a href="{{ route('payment-plan') }}">Manage My Plan</a></li>
                 <li><a class="dropdown-button" href="#!" data-activates="other_links"><i class="material-icons">&#xE5D3;</i></a></li>
             </ul>
 
@@ -212,6 +212,7 @@ London, EC1N 8JY</p>
     <script src="{{ asset('theme/js/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/js/materialize.min.js') }}"></script>
     <script src="{{ asset('theme/js/usr-application.js') }}"></script>
+    @yield('footer')
     <script type="text/javascript">
         $(document).ready(function() {
             // Mobile Navigation
