@@ -3,12 +3,16 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <title>
-	Yaadbook || About Us
-</title>
+	    Yaadbook
+    </title>
 
     <!-- Fonts and icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" /><link rel="icon" href="images/favicon.png" type="image/png" />
@@ -17,6 +21,7 @@
     <link href="{{ asset('theme/css/themeNew.css') }}" rel="stylesheet" />
     <link href="{{ asset('theme/css/theme.css') }}" rel="stylesheet" />
     <link href="{{ asset('theme/css/responsive.css') }}" rel="stylesheet" />
+    <link href="{{ asset('theme/css/toastr.min.css') }}" rel="stylesheet" />
 <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -135,6 +140,8 @@ function __doPostBack(eventTarget, eventArgument) {
     @yield('content')
 
 
+
+
     <div class="footer_bg">
             <div class="container">
                 <div class="row">
@@ -222,7 +229,10 @@ London, EC1N 8JY</p>
             $('select').material_select();
         });
     </script>
-    <script src="js/jquery.stellar.js"></script>         
+    <script src="{{ asset('theme/js/jquery.stellar.js') }}"></script>
+    <script src="{{ asset('theme/js/toastr.min.js') }}"></script>
+    <script src="{{ asset('theme/js/toastr_glimpse.js') }}"></script>
+    <script src="{{ asset('theme/js/glimpse.toastr.js') }}"></script>
     <script>
         $(function () {
             $.stellar({

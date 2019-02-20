@@ -1446,5 +1446,723 @@
 @endsection
 
 @section('footer')
-    <p>Hello I'm footer</p>
+
+    <script>
+        var publish = 1;
+        $(".csPublishAs").click(function () {
+            if (!$(this).is(':checked')) {
+                publish = 0;
+            }
+            else {
+                publish = 1;
+            }
+        });
+        $(".csPostDraft").click(function () {
+            var validation = memorial_post_validation();
+            if (validation == false) {
+                return;
+            }
+            var Post_title = $("#txtPostTitle").val();
+            var Post_description = $("#txtPostDesc").val();
+            //alert("Draft");
+            var publishas = publish;
+            //alert("publishasDraft" + publishas)
+            var Post_status = 1;
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            //alert("pp");
+            $.ajax({
+                type: "POST",
+
+                url: "{{ route('user.post.add') }}",
+                data: JSON.stringify({ _token: CSRF_TOKEN, Post_title_p: Post_title, Post_description_p: Post_description, Publish_as: publishas, Post_status_p: Post_status }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $("#txtPostTitle").val("");
+                    $("#txtPostDesc").val("");
+                    $("#msgshow").attr('style', 'display:block');
+                    $("#msgshow").removeClass("alert-box error").addClass("alert-box success");
+                    $("#lblmsg").text("Your post has successfully drafted.");
+                    window.setTimeout(function () {
+                        $('#msgshow').attr('slyle', 'display:none');
+                    }, 5000);
+                    window.location = 'timeline.aspx';
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        });
+        $(".csReset").click(function () {
+            document.getElementById("imgUpdates").value = "";
+            $("[id$=MemorialImgUpl] img").remove();
+            $('#form1')[0].reset();
+            $(".shareEdit_Box").removeClass("current");
+        });
+        $(".csTimelinePost").click(function () {
+            //alert("inside Timeline");
+            var validation = memorial_post_validation();
+            if (validation == false) {
+                return;
+            } else {
+                $("#post").removeClass("current");
+            }
+
+            var Post_title = $("#txtPostTitle").val();
+            var Post_description = $("#txtPostDesc").val();
+            var publishas = publish;
+            var Post_status = 0;
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('user.post.add') }}",
+                data: JSON.stringify({ _token: CSRF_TOKEN, Post_title_p: Post_title, Post_description_p: Post_description, Publish_as: publishas, Post_status_p: Post_status }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var response = JSON.stringify(response);
+                    toastr.success(response);
+                    console.log(response);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        });
+        function memorial_post_validation() {
+            //alert("inside post function");
+            var Post_title = $("#txtPostTitle").val();
+            var Post_description = $("#txtPostDesc").val();
+            if (Post_title == "") {
+                $("#txtPostTitle").focus();
+                return false;
+            }
+            if (Post_description == "") {
+                $("#txtPostDesc").focus();
+                return false;
+            }
+        }
+        $("#fuimgUpdates").change(function () {
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#divImgUpl");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+                    if ($.inArray(file[0].name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                        //alert("This is not a valid image file.");
+                        return false;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = $("<img />");
+                        //img.attr("style", "width: 50px;height: 35px;float: left; margin-left:5px;");
+                        img.attr("src", e.target.result);
+                        dvPreview.append(img);
+                        if (document.getElementById("hdfImgpath").value == "") {
+                            document.getElementById("hdfImgpath").value = e.target.result;
+                        }
+                        else {
+                            document.getElementById("hdfImgpath").value = document.getElementById("hdfImgpath").value + "$$" + e.target.result;
+                        }
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+                //$("#addImgUpl").attr('style', 'display:block');
+            } else {
+                //alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+        $(".csSubmit").click(function () {
+            $("#album").removeClass("current");
+            var validation = album_validation();
+            if (validation == false) {
+                return;
+            }
+
+            var title = document.getElementById("txtAlbumTitle").value;
+            var img_path = document.getElementById("hdfImgpath").value;
+            var desc = document.getElementById("txtDescription").value;
+            var album_typ = "1";
+            $("[id$=divImgUpl] img").remove();
+            //$("#addImgUpl").attr('style', 'display:none');
+            console.log(img_path);
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('user.post.add') }}",
+                data: JSON.stringify({  _token: CSRF_TOKEN, title_p: title, imgPath_p: img_path, desc_p: desc, album_typ_p: album_typ }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                   alert(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        });
+        function album_validation() {
+            var title = $("#txtAlbumTitle").val().trim();
+            var desc = $("#txtDescription").val().trim();
+            var imgpath = $("#hdfImgpath").val().trim();
+            if (title == "") {
+                $("#txtAlbumTitle").focus();
+                return false;
+            }
+            if (desc == "") {
+                $("#txtDescription").focus();
+                return false;
+            }
+            if (imgpath == "") {
+                $("#fuimgUpdates").focus();
+                return false;
+            }
+        }
+        $("#imgUpdates").change(function () {
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#MemorialImgUpl");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+                    if ($.inArray(file[0].name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                        //alert("This is not a valid image file.");
+                        return false;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = $("<img />");
+                        //img.attr("style", "width: 50px;height: 35px;float: left; margin-left:5px;");
+                        img.attr("src", e.target.result);
+                        dvPreview.append(img);
+                        if (document.getElementById("hdfphotoImgpaths").value == "") {
+                            document.getElementById("hdfphotoImgpaths").value = e.target.result;
+                        }
+                        else {
+                            document.getElementById("hdfphotoImgpaths").value = document.getElementById("hdfphotoImgpaths").value + "$" + e.target.result;
+                        }
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+                //$("#MemorialImgUpl").attr('style', 'display:block');
+            } else {
+                //alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+        function photo_validation() {
+            var Memorials = $("#ddlMemorial").val().trim();
+            //alert("Memorials" + Memorials)
+            var photoImgpaths = $("#hdfphotoImgpaths").val().trim();
+            //alert("photoImgpaths" + photoImgpaths)
+            if (Memorials == "") {
+                return false;
+            }
+            if (photoImgpaths == "") {
+                return false;
+            }
+        }
+
+        $(".csPhoto").click(function () {
+            //alert("Upload Photo")
+            var validation = photo_validation();
+            //alert("validatePhoto" + validation)
+            if (validation == false) {
+                return;
+                //alert("A")
+            }
+            else {
+                //alert("B")
+                $("#photo").removeClass("current");
+                //alert("C")
+            }
+            var Memorial_id = document.getElementById("ddlMemorial").value;
+            //alert("Memorial_id Upload" + Memorial_id)
+            var image_paths = document.getElementById("hdfphotoImgpaths").value;
+            //alert("image_paths" + image_paths)
+            $("[id$=MemorialImgUpl] img").remove();
+            $.ajax({
+                type: "POST",
+                url: "../webmethods/web-memorial.aspx/PostMemorilImg",
+                data: JSON.stringify({ Memorial_Id_p: Memorial_id, image_paths_p: image_paths }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $("#ddlMemorial").val("");
+                },
+                failure: function (response) {
+                    //alert(response.d);
+                }
+            });
+        });
+        function memorial_photo_validation() {
+            var Memorial_title = $("#Memorialtitle").val();
+            var image_paths = $("hdfphotoImgpaths").val();
+            if (Memorial_title == "") {
+                $("#Memorialtitle").focus();
+                return false;
+            }
+            if (Photo == "") {
+                $("#ImgUpl").focus();
+                return false;
+            }
+        }
+        $(".csPostlike").click(function () {
+            var _postid = $(this).closest("tr").find('.csPostId input[type=hidden]').val();
+            var _posttype = $(this).closest("tr").find('.csPostTyp input[type=hidden]').val();
+            var spanlikecount = $(this).closest("tr").find('.csLikeCount');
+            var spanlike = $(this).closest("tr").find('.csLikecss');
+            var hideLike = $(this).closest("tr").find('.clkLike');
+            var showLike = $(this).closest("tr").find('.clkdisLike');
+            $.ajax({
+                type: "POST",
+                url: "timeline.aspx/insLike",
+                data: JSON.stringify({ postid: _postid, posttype: _posttype }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    OnLikeSuccess(response, spanlike, spanlikecount, hideLike, showLike);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        });
+        function OnLikeSuccess(response, spanlike, spanlikecount, hideLike, showLike) {
+            var likeStatus = response.d.split(',');
+            spanlikecount.html(likeStatus[1]);
+            if (likeStatus[0] == "1") {
+                hideLike.hide();
+                showLike.show();
+            }
+            else {
+                hideLike.show();
+                showLike.hide();
+            }
+        }
+        $(".csCommentSend").click(function () {
+            //alert("CA")
+            var currentrow = $(this).closest("tr");
+            var commmnnnn = $(this).closest(".timelineBox");
+            commentclick(currentrow, commmnnnn);
+
+        });
+        function commentclick(currentrow, commmnnnn) {
+            //alert("CB")
+            var _postid = currentrow.find('.csPostId input[type=hidden]').val();
+            var _posttype = currentrow.find('.csPostTyp input[type=hidden]').val();
+            var _comment = currentrow.find('.csCommet').val();
+            var comntcount = currentrow.find('.csCommentCount').html().replace('Comments', '');
+            currentrow.find('.csCommet').val('');
+            if (_comment == "") {
+                currentrow.find('.csCommet').focus();
+                return;
+            }
+            if (document.getElementById("hdfCmntsts").value == "0") {//insert comment
+                $.ajax({
+                    type: "POST",
+                    url: "timeline.aspx/insComment",
+                    data: JSON.stringify({ postid: _postid, posttype: _posttype, comment: _comment }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        OnCommentSuccess(response, comntcount, commmnnnn);
+                        // window.location = 'timeline.aspx';
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
+            }
+            else if (document.getElementById("hdfCmntsts").value == "1") {
+
+                $.ajax({
+                    type: "POST",
+                    url: "timeline.aspx/updComment",
+                    data: JSON.stringify({ commentid: editcomntrowid, comment: _comment, createdby: editcomntcreatedby }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        OnCommentUpdate(response, currentrow, _comment);
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
+                document.getElementById("hdfCmntsts").value = "0";
+            }
+        }
+        function OnCommentUpdate(response, currentrow, _comment) {
+            //alert("CC")
+            var output = (response.d).split(',');
+            var aaa = output[1];
+            // alert(output);
+            if (output[0] == "2") {
+                editcomntrownm.html(_comment);
+                //editcomntcreatedon.html(localTime(output[1]));
+            }
+        }
+        function OnCommentSuccess(response, comntcount, commmnnnn) {
+            //alert("CD")
+            var output = (response.d);
+            var xmlDoc = $.parseXML(response.d);
+            var xml = $(xmlDoc);
+            //alert("xmlvalue" + xml)
+            var rvw_comnt = xml.find("Table");
+            var row = $("[id$=csCommentrowmain] tr:last").eq(0).clone(true);
+            //alert("rowcomment" + row)
+            rvw_comnt.each(function () {
+                row.attr("style", "display:block;");
+                $(".csprofimg_cmnt", row).attr('src', rvw_comnt.find("profimg_cmnt").text());
+                var date_comnt = rvw_comnt.find("Created_on_cmnt").text().replace('T', ' ');//'T' is coming by default from database
+                $(".csName_cmnt", row).html(rvw_comnt.find("Name_cmnt").text());
+                var cmtText;
+                //alert("cmtText" + cmtText)
+                cmtText = rvw_comnt.find("Comment").text().replace(/((https?\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi, function (url) {
+                    var full_url = url;
+                    if (!full_url.match('^https?:\/\/')) {
+                        full_url = 'http://' + full_url;
+                    }
+                    return '<a href="' + full_url + '" target="_blank">' + url + '</a>';
+                });
+
+                $(".csComment_cmnt", row).html(cmtText);
+                $(".csCreated_on_cmnt", row).html(localTime(rvw_comnt.find("Created_on_cmnt").text()));
+                $(".csCreated_by_cmnt", row).find("input[type=hidden]").attr('value', rvw_comnt.find("Created_by_cmnt").text());
+                $(".csCmtId", row).find("input[type=hidden]").attr('value', rvw_comnt.find("Review_post_id").text());
+                commmnnnn.find('.csCommentCount').html(Number(comntcount) + 1 + " Comments");//total comment count
+
+                var sesUid = document.getElementById("hdfUserid").value;
+                var comntUid = $(".csCreated_by_cmnt", row).find("input[type=hidden]").val();
+                if (sesUid == comntUid) {
+                    $(".csShowPanel", row).attr('style', 'display:table-cell');
+                    //$(".csEditCmt", row).attr('style', 'display:block');
+                    //$(".csRmvCmt", row).attr('style', 'display:block');
+                }
+                else {
+                    $(".csShowPanel", row).attr('style', 'display:none');
+                    //$(".csEditCmt", row).attr('style', 'display:none');
+                    //$(".csRmvCmt", row).attr('style', 'display:none');
+                }
+                $(".timeBox-comment", row).attr('style', 'display:block');
+                $("[id$=csCommentrowmain]").append(row);
+
+
+            });
+        }
+        var editcomntrownm;
+        var editcomntrowid;//used to store the selected comment
+        var editcomntcreatedby;
+        var editcomntcreatedon;
+        $('.csEditCmt').click(function () {
+            editcomntrowid = $(this).closest(".csCommentrow").find('.csCmtId input[type=hidden]').val();
+            editcomntcreatedby = $(this).closest(".csCommentrow").find('.csCreated_by_cmnt input[type=hidden]').val();
+            editcomntrownm = $(this).closest(".csCommentrow").find('.csComment_cmnt');
+            editcomntcreatedon = $(this).closest(".csCommentrow").find('.csCreated_on_cmnt');
+            var comment = $(this).closest(".csCommentrow").find('.csComment_cmnt').html();
+            $(this).closest(".timelineBox").find(".csCommet").val(comment);
+            $(this).closest(".timelineBox").find(".csCommet").focus();
+            document.getElementById("hdfCmntsts").value = "1";
+        });
+        $('.csRmvCmt').click(function () {
+            var currentrow = $(this).closest(".csCommentrow");
+            var currentparentrow = $(this).closest(".csTimelineMnRow");
+            var _commentid = $(this).closest(".csCommentrow").find('.csCmtId input[type=hidden]').val();
+            var _comntcreatedby = $(this).closest(".csCommentrow").find('.csCreated_by_cmnt input[type=hidden]').val();
+            var comntcount = $(this).closest(".timelineBox").find('.csCommentCount').html().replace('Comments', '');
+            var commmnnnn = $(this).closest(".timelineBox");
+            $.ajax({
+                type: "POST",
+                url: "timeline.aspx/removeComment",
+                data: JSON.stringify({ commentid: _commentid, createdby: _comntcreatedby }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    OnCmtRemove(response, currentrow, currentparentrow, comntcount, commmnnnn);
+
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        });
+        function OnCmtRemove(response, currentrow, currentparentrow, comntcount, commmnnnn) {
+            alert(response.d);
+            var cmtStatus = response.d;
+            if (cmtStatus == "3") {
+                currentrow.remove();
+                commmnnnn.find('.csCommentCount').html(comntcount - 1 + " Comments");//total comment count
+            }
+        }
+
+        $('.csViewMore').click(function () {
+            pageIndex++;
+            getTimeline();
+        });
+    </script>
+    <script type="text/javascript">
+        var pageIndex = 1;
+        var pageCount;
+        $(document).ready(function () {
+            var dt = new Date()
+            var utcdiff = dt.getTimezoneOffset();//get the difference from utc time
+            var tt = utcdiff.toString().replace('-', '');
+            $("#hdfOffsetTime").val(tt);
+            getTimeline();
+            $('.share-btn').click(function () {
+                var tab_id = $(this).attr('data-tab');
+                $('.share-btn').removeClass('current');
+                $('.shareEdit_Box').removeClass('current');
+                $(this).addClass('current');
+                $("#" + tab_id).addClass('current');
+            })
+        });
+        function getTimeline() {
+            if (pageIndex == 1 || pageIndex <= pageCount) {
+                //Show Loader
+                if ($("[id$=tblShareMemory] .timelineloader").length == 0) {
+                    var row = $("[id$=tblShareMemory] tr").eq(0).clone(true);
+                    row.addClass("timelineloader");
+                    row.attr('style', 'display:block;');
+                    row.children().remove();
+                    row.append('<td style= "text-align:center;width: 1%;"><img src="../images/loader-timeline.gif" /></td>');
+                    $("[id$=tblShareMemory]").append(row);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "timeline.aspx/retmytimeline",
+                    data: JSON.stringify({ pageIndex_p: pageIndex }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        var xmlDoc = $.parseXML(response.d);
+                        var xml = $(xmlDoc);
+                        var MyShareMemory = xml.find("Table");
+                        var MyLeftMemory = xml.find("Table2");
+                        var recentpost = "";
+                        pageCount = parseInt(xml.find("Table1").eq(0).find("PageCount").text());
+                        BindTimelineDetails(MyShareMemory, MyLeftMemory);
+                        var recentpost = "";
+                        recentpost = '1';
+                        //alert("recentpostval" + recentpost)
+                        if (recentpost == 1) {
+                            $(".csRecentpost").attr('style', 'display:none;');
+                        }
+                        else {
+                            $(".csRecentpost").attr('style', 'display:block;');
+                        }
+                        var nodraft = "";
+                        nodraft = '1';
+                        //alert("nodraftvalue" + nodraft)
+                        if (nodraft == 1) {
+                            $(".csDraft").attr('style', 'display:none;');
+                        }
+                        else {
+                            $(".csDraft").attr('style', 'display:block;');
+                        }
+                    },
+                    failure: function (response) {
+                        //alert("fail");
+                    },
+                    error: function (response) {
+                        // alert("error");
+                    }
+                });
+            }
+        }
+        function BindTimelineDetails(MyShareMemory, MyLeftMemory) {
+            //alert("inside BindTimelineDetails")
+            var MyShareMemorial = '';
+            var MyMemories = '';
+            var itemCounter = 1;
+            var nCol = 2;
+            MyShareMemory.each(function () {
+                var timeline = $(this);
+                var row = $("[id$=tblShareMemory] tr").eq(0).clone(true);
+                row.attr("style", "display:block;");
+                var Post_CreatedBy = timeline.find("Created_by").text();
+                $(".csPostImg", row).attr('src', "../UserMemorial" + timeline.find("Shareimg").text());
+                if (timeline.find("styleshareimg").text() != "") {
+                    $(".csPostDiv", row).attr('style', timeline.find("styleshareimg").text());
+                }
+                else {
+                    $(".csPostDiv", row).attr('style', "display:none;");
+                }
+                $(".csposttype", row).html(timeline.find("commentyp").text());
+                $(".csLikeCount", row).html(timeline.find("Postlike").text());
+                $(".csCommentCount", row).html(timeline.find("Postcomment").text());
+                $(".csProfileImg", row).attr('src', timeline.find("Profile_image").text());
+
+                $(".csName", row).html(timeline.find("Name").text());
+                $(".csPostName", row).html(timeline.find("PNAME").text());
+
+                $(".csPostDesc", row).html(timeline.find("PDESC").text());
+
+                $(".csPostId", row).find("input[type=hidden]").attr('value', timeline.find("PID").text());
+                $(".csPostTyp", row).find("input[type=hidden]").attr('value', timeline.find("PTYPE").text());
+                $(".csTimeago", row).html(timeline.find("Created_on").text());
+                if (timeline.find("Likecss").text() == 'display:inline-block;') {
+                    $(".clkLike", row).attr('style', "display:none;");
+                    $(".clkdisLike", row).attr('style', "display:inline-block;");
+                }
+                var timeline_comnts = timeline.find("Table3");
+                var comntrowcount = 0;
+                $(timeline_comnts).each(function (index) {
+                    comntrowcount++;
+                    var commentrow = $("[id$=csCommentrowmain] tr", row).eq(0).clone(true);
+                    var ztimeline_comnt = $(this);
+                    comntbind(commentrow, ztimeline_comnt, Post_CreatedBy);
+                    $("[id$=csCommentrowmain]", row).append(commentrow);
+                });
+                $("[id$=csCommentrowmain] tr:first", row).attr('style', 'display:none;');//display not to first row
+                //comment end
+                $("[id$=tblShareMemory]").append(row);
+            });
+            $(".timelineloader").remove();
+            $(".csLeftMemories").attr('style', "display:block;");
+            $(MyLeftMemory).each(function (index) {
+                var rowdata = $(this);
+                $(".csLeftMemories").attr('style', "display:none;");
+                $("#ddlMemorial").append($("<option></option>").val(rowdata.find("Memorial_id").text()).html(rowdata.find("Memorial_name").text()));
+                if ((itemCounter % nCol) == 0) {
+                    MyMemories = MyMemories +
+                        '<div class="memory_sideBox">'
+                        + '<a href="../UserMemorial/memorial-details.aspx?memorial_id=' + rowdata.find("Memorial_id").text() + '">' + '<h4>' + rowdata.find("Memorial_name").text() + '</h4>' + '</a>'
+                        + '<h5>' + rowdata.find("PostDate").text() + '</h5>'
+                        + '<p>' + rowdata.find("Content").text() + '</p>' + '</div>'
+                    ;
+                }
+                else {
+                    MyMemories = MyMemories +
+                        '<div class="memory_sideBox">'
+                        + '<a href="../UserMemorial/memorial-details.aspx?memorial_id=' + rowdata.find("Memorial_id").text() + '">' + '<h4>' + rowdata.find("Memorial_name").text() + '</h4>' + '</a>'
+                        + '<h5>' + rowdata.find("PostDate").text() + '</h5>'
+                        + '<p>' + rowdata.find("Content").text() + '</p>'
+                        + '</div>'
+                    ;
+                }
+                itemCounter++;
+            });
+            MyMemories = MyMemories;
+            $('#tblleftMemory').html(MyMemories);
+        }
+        function comntbind(commentrow, ztimeline_comnt, Post_CreatedBy) {
+            $(".csprofimg_cmnt", commentrow).attr('src', ztimeline_comnt.find("profimg_cmnt").text());
+            var date_comnt = ztimeline_comnt.find("Created_on_cmnt").text().replace('T', ' ');//'T' is coming by default from database
+            $(".csName_cmnt", commentrow).html(ztimeline_comnt.find("Name_cmnt").text());
+            var cmtText;
+            cmtText = ztimeline_comnt.find("Comment").text().replace(/((https?\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi, function (url) {
+                var full_url = url;
+                if (!full_url.match('^https?:\/\/')) {
+                    full_url = 'http://' + full_url;
+                }
+                return '<a href="' + full_url + '" target="_blank">' + url + '</a>';
+            });
+            $(".csComment_cmnt", commentrow).html(cmtText);
+            $(".csCreated_on_cmnt", commentrow).html(localTime(ztimeline_comnt.find("Created_on_cmnt").text()));
+            $(".csCreated_by_cmnt", commentrow).find("input[type=hidden]").attr('value', ztimeline_comnt.find("Created_by_cmnt").text());
+            $(".csCmtId", commentrow).find("input[type=hidden]").attr('value', ztimeline_comnt.find("Review_post_id").text());
+
+            var sesUid = document.getElementById("hdfUserid").value;
+            var comntUid = $(".csCreated_by_cmnt", commentrow).find("input[type=hidden]").val();
+            if (sesUid == comntUid) {
+                $(".csShowPanel", commentrow).attr('style', 'display:table-cell');
+            }
+            else {
+                $(".csShowPanel", commentrow).attr('style', 'display:none');
+            }
+            if (Post_CreatedBy == sesUid) {
+                $(".csShowPanel", commentrow).attr('style', 'display:table-cell');
+                $(".csPCEdit", commentrow).attr('style', 'display:none');
+                $(".csPCRmv", commentrow).attr('style', 'display:inline-block');
+                if (sesUid == comntUid) {
+                    $(".csPCEdit", commentrow).attr('style', 'display:inline-block');
+                }
+            }
+        }
+        function detectBrowser() {
+            var N = navigator.appName;
+            var UA = navigator.userAgent;
+            var temp;
+            var browserVersion = UA.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+            //if (browserVersion && (temp = UA.match(/version\/([\.\d]+)/i)) != null)//for finding the version
+            //    browserVersion[2] = temp[1];
+            //browserVersion = browserVersion ? [browserVersion[1], browserVersion[2]] : [N, navigator.appVersion, '-?'];
+            browserVersion = browserVersion ? [browserVersion[1]] : [N, navigator.appVersion, '-?'];
+            return browserVersion;
+        };
+
+
+        //local time conversion start
+        function localTime(dbDate1) {
+            //alert(dbDate1);
+            //
+            var dbDate;
+            var browser = detectBrowser().toString().split(',');
+
+            if (browser[0] == "Firefox") {
+                dbDate = dbDate1;
+            }
+            else if (browser[0] == "Chrome") {
+                dbDate = dbDate1.replace('T', ' ');
+            }
+            else if (browser[0] == "Netscape") {
+                dbDate = dbDate1;
+            }
+            else if (browser[0] == "Safari") {
+                var dt = dbDate1.split(/[-T.]/);
+                dbDate = dt.slice(0, 3).join('/') + ' ' + dt[3];
+            }
+            else {
+                dbDate = dbDate1.replace('T', ' ');
+            }
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var d = new Date()
+            var n = d.getTimezoneOffset();//get the difference from utc time
+            var min;
+            if (n.toString().charAt(0) == "+") {
+                min = parseInt(n.toString().replace('+', '-'));
+            }
+            else if (n.toString().charAt(0) == "-") {
+                min = parseInt(n.toString().replace('-', ''));
+            }
+            else {
+                min = parseInt("-" + n.toString());
+            }
+            var date = new Date(Date.parse(dbDate));
+            date.setMinutes(date.getMinutes() + min);
+            var ampm = (date.getHours() >= 12) ? "PM" : "AM";
+            var localdate = date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear() + " " + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + " " + ampm;
+            return localdate;
+
+        }
+        //conversion end
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //alert("Open");
+            //alert("inside timeBox-comment")
+            //$(".button-collapse").sideNav(); // Mobile Navigation
+            //$('.modal').modal(); // Modal Popup
+            //$('select').material_select();
+            $('.timeBox-comment').hide();
+            var click = 0;
+            $('.aComments').click(function () {
+                //$(this).closest(".timelineBox").find(".csCommentrowmain").toggle();
+
+                $(this).closest("tr").find('.timeBox-comment').toggle();
+                if (click != 1) {
+                    //alert("Click A")
+                    $(this).closest("tr").find('.timeBox-comment table').attr('style', 'display:block;');
+                    click = 1;
+                }
+                else {
+                    //alert("Click B")
+                    $(this).closest("tr").find('.timeBox-comment table').attr('style', 'display:none;');
+                    click = 0;
+                }
+                //$('.timeBox-comment').toggle();
+            });
+        });
+    </script>
+
 @endsection

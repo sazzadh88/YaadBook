@@ -28,7 +28,6 @@ Route::post('/login/writer', 'Auth\LoginController@writerLogin');
 Route::post('/register/admin', 'Auth\RegisterController@createAdmin');
 Route::post('/register/writer', 'Auth\RegisterController@createWriter');
 
-Route::view('/home', 'home')->middleware('auth')->name('home2');
 Route::view('/admin', 'admin')->middleware('auth:admin');;
 Route::view('/writer', 'writer')->middleware('auth:writer');
 
@@ -40,6 +39,11 @@ Route::get('ra', function(){
     return App\Plan::with('plandetail')->get();
 });
 
-Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe','uses' => 'MoneySetupController@payWithStripe'));
+Route::get('payment/stripe', array('as' => 'addmoney.paywithstripe','uses' => 'MoneySetupController@payWithStripe'));
  
-Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'MoneySetupController@postPaymentWithStripe'));            
+Route::post('payment/stripe', array('as' => 'addmoney.stripe','uses' => 'MoneySetupController@postPaymentWithStripe'));
+
+Route::group(['middleware' => ['web','auth']], function() {
+    Route::get('/home', 'HomeController@index')->name('home2');
+    Route::post('/post', 'HomeController@addPost')->name('user.post.add');
+});

@@ -29,27 +29,29 @@ class MoneySetupController extends Controller
             'cvvNumber' => 'required'
             // 'amount' => 'required'
         ]);
+
         $input = $request->all();
+
         if ($validator->passes()) {
             $input = array_except($input, array('_token'));
             $stripe = Stripe::make(env('STRIPE_SECRET'));
             try {
-                $token = $stripe->tokens()->create([
-                    'card' => [
-                        'number' => $request->get('card_no'),
-                        'exp_month' => $request->get('ccExpiryMonth'),
-                        'exp_year' => $request->get('ccExpiryYear'),
-                        'cvc' => $request->get('cvvNumber'),
-                    ],
-                ]);
-                // $token = $stripe->tokens()->create([
-                //     'card' => [
-                //         'number' => '4242424242424242',
-                //         'exp_month' => 10,
-                //         'cvc' => 314,
-                //         'exp_year' => 2020,
-                //     ],
-                // ]);
+//                $token = $stripe->tokens()->create([
+//                    'card' => [
+//                        'number' => $request->get('card_no'),
+//                        'exp_month' => $request->get('ccExpiryMonth'),
+//                        'exp_year' => $request->get('ccExpiryYear'),
+//                        'cvc' => $request->get('cvvNumber'),
+//                    ],
+//                ]);
+                 $token = $stripe->tokens()->create([
+                     'card' => [
+                         'number' => '4242424242424242',
+                         'exp_month' => 10,
+                         'cvc' => 314,
+                         'exp_year' => 2020,
+                     ],
+                 ]);
                 if (!isset($token['id'])) {
                     return redirect()->route('addmoney.paywithstripe');
                 }
@@ -67,7 +69,7 @@ class MoneySetupController extends Controller
                     echo "<pre>";
                     print_r($charge);
                     exit();
-                    return redirect()->route('addmoney.paywithstripe');
+//                    return redirect()->route('addmoney.paywithstripe');
                 } else {
                     return redirect()->route('addmoney.paywithstripe')->withError($e->getMessage());
                 }
