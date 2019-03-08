@@ -1413,17 +1413,17 @@
                         <div class="sidebar_cnt">
                             <h4>NNNN</h4>
                             <p>NNNN</p>
-                        </div> 
+                        </div>
 
                         <div class="sidebar_cnt">
                             <h4>ss</h4>
                             <p>z</p>
-                        </div> 
+                        </div>
 
                         <div class="sidebar_cnt">
                             <h4>www</h4>
                             <p>wwww</p>
-                        </div> 
+                        </div>
 
 
                     </div>
@@ -1448,7 +1448,7 @@
 @section('footer')
 
     <script>
-        var publish = 1;
+        var publish = 0;
         $(".csPublishAs").click(function () {
             if (!$(this).is(':checked')) {
                 publish = 0;
@@ -1475,7 +1475,7 @@
                 type: "POST",
 
                 url: "{{ route('user.post.add') }}",
-                data: JSON.stringify({ _token: CSRF_TOKEN, Post_title_p: Post_title, Post_description_p: Post_description, Publish_as: publishas, Post_status_p: Post_status }),
+                data: JSON.stringify({post_type:'text', _token: CSRF_TOKEN, Post_title_p: Post_title, Post_description_p: Post_description, Publish_as: publishas, Post_status_p: Post_status }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
@@ -1487,7 +1487,7 @@
                     window.setTimeout(function () {
                         $('#msgshow').attr('slyle', 'display:none');
                     }, 5000);
-                    window.location = 'timeline.aspx';
+                    // window.location = 'timeline.aspx';
                 },
                 failure: function (response) {
                     alert(response.d);
@@ -1517,16 +1517,17 @@
             $.ajax({
                 type: "POST",
                 url: "{{ route('user.post.add') }}",
-                data: JSON.stringify({ _token: CSRF_TOKEN, Post_title_p: Post_title, Post_description_p: Post_description, Publish_as: publishas, Post_status_p: Post_status }),
+                data: JSON.stringify({post_type:'text', _token: CSRF_TOKEN, Post_title_p: Post_title, Post_description_p: Post_description, Publish_as: publishas, Post_status_p: Post_status }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     var response = JSON.stringify(response);
                     toastr.success(response);
-                    console.log(response);
+                    console.log("Text Data", data);
                 },
                 failure: function (response) {
                     alert(response.d);
+                    console.log("Text Data", data);
                 }
             });
         });
@@ -1588,17 +1589,20 @@
             //$("#addImgUpl").attr('style', 'display:none');
             console.log(img_path);
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
+
+                $.ajax({
                 type: "POST",
                 url: "{{ route('user.post.add') }}",
-                data: JSON.stringify({  _token: CSRF_TOKEN, title_p: title, imgPath_p: img_path, desc_p: desc, album_typ_p: album_typ }),
+                data: JSON.stringify({  _token: CSRF_TOKEN, post_type: 'album',title_p: title, imgPath_p: img_path, desc_p: desc, album_typ_p: album_typ }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                    alert(response);
+                    console.log("Image Data", data);
                 },
                 failure: function (response) {
                     alert(response);
+                    console.log("Album Data", data);
                 }
             });
         });
@@ -1639,7 +1643,7 @@
                             document.getElementById("hdfphotoImgpaths").value = e.target.result;
                         }
                         else {
-                            document.getElementById("hdfphotoImgpaths").value = document.getElementById("hdfphotoImgpaths").value + "$" + e.target.result;
+                            document.getElementById("hdfphotoImgpaths").value = document.getElementById("hdfphotoImgpaths").value + "$$" + e.target.result;
                         }
                     }
                     reader.readAsDataURL(file[0]);
@@ -1650,13 +1654,13 @@
             }
         });
         function photo_validation() {
-            var Memorials = $("#ddlMemorial").val().trim();
+            // var Memorials = $("#ddlMemorial").val().trim();
             //alert("Memorials" + Memorials)
             var photoImgpaths = $("#hdfphotoImgpaths").val().trim();
             //alert("photoImgpaths" + photoImgpaths)
-            if (Memorials == "") {
-                return false;
-            }
+            // if (Memorials == "") {
+            //     return false;
+            // }
             if (photoImgpaths == "") {
                 return false;
             }
@@ -1675,22 +1679,26 @@
                 $("#photo").removeClass("current");
                 //alert("C")
             }
-            var Memorial_id = document.getElementById("ddlMemorial").value;
+            // var Memorial_id = document.getElementById("ddlMemorial").value;
             //alert("Memorial_id Upload" + Memorial_id)
             var image_paths = document.getElementById("hdfphotoImgpaths").value;
             //alert("image_paths" + image_paths)
             $("[id$=MemorialImgUpl] img").remove();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
             $.ajax({
                 type: "POST",
-                url: "../webmethods/web-memorial.aspx/PostMemorilImg",
-                data: JSON.stringify({ Memorial_Id_p: Memorial_id, image_paths_p: image_paths }),
+                url: "{{ route('user.post.add') }}",
+                data: JSON.stringify({_token: CSRF_TOKEN, post_type: 'image', image_paths_p: image_paths }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     $("#ddlMemorial").val("");
+                    console.log("Image Data", data);
                 },
                 failure: function (response) {
                     //alert(response.d);
+                    console.log("Image Data", data);
                 }
             });
         });
